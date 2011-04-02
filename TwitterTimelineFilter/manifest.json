@@ -1,6 +1,6 @@
 {
   "name": "__MSG_name__",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "__MSG_description__",
   "default_locale": "en",
   "background_page": "background.html",
@@ -14,5 +14,6 @@
       "js": [ "content.js" ],
       "run_at": "document_end"
     }
-  ]
+  ],
+  "update_url": "http://monoweb.info/chrome/extension/twittertimelinefilter/updates.xml"
 }
