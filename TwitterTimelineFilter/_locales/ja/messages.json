@@ -1,0 +1,42 @@
+{
+  "name": {
+    "message": "TwitterTimelineFilter"
+  },
+  "description": {
+    "message": "Twitterのタイムラインをフィルタリングする拡張機能です。"
+  },
+  "options_options": {
+    "message": "オプション"
+  },
+  "options_type": {
+    "message": "種類"
+  },
+  "options_type_text": {
+    "message": "本文"
+  },
+  "options_type_screen_name": {
+    "message": "ユーザー名"
+  },
+  "options_type_full_name": {
+    "message": "名称"
+  },
+  "options_pattern": {
+    "message": "パターン"
+  },
+  "options_regexp": {
+    "message": "正規表現"
+  },
+  "options_add": {
+    "message": "追加"
+  },
+  "options_delete": {
+    "message": "削除"
+  },
+  "options_save": {
+    "message": "保存"
+  },
+  "options_reset": {
+    "message": "リセット"
+  }
+}
+

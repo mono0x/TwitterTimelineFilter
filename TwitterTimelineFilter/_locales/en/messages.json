@@ -1,0 +1,42 @@
+{
+  "name": {
+    "message": "TwitterTimelineFilter"
+  },
+  "description": {
+    "message": ""
+  },
+  "options_options": {
+    "message": "Options"
+  },
+  "options_type": {
+    "message": "Type"
+  },
+  "options_type_text": {
+    "message": "Text"
+  },
+  "options_type_screen_name": {
+    "message": "Username"
+  },
+  "options_type_full_name": {
+    "message": "Name"
+  },
+  "options_pattern": {
+    "message": "Pattern"
+  },
+  "options_regexp": {
+    "message": "Regexp"
+  },
+  "options_add": {
+    "message": "Add"
+  },
+  "options_delete": {
+    "message": "Delete"
+  },
+  "options_save": {
+    "message": "Save"
+  },
+  "options_reset": {
+    "message": "Reset"
+  }
+}
+

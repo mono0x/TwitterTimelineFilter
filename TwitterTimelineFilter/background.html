@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script type="text/javascript">
+      var defaultOptions = {
+        filters: []
+      };
+      var load = function() {
+        var options = localStorage.options;
+        return options ? JSON.parse(options) : defaultOptions;
+      };
+      var save = function(options) {
+        localStorage.options = JSON.stringify(options);
+      };
+
+      chrome.extension.onConnect.addListener(function(port) {
+        console.assert(port.name == 'TwitterTimelineFilter');
+
+        port.onMessage.addListener(function(m) {
+          switch(m.type) {
+            case 'options.load':
+              port.postMessage({ type: 'options.load', options: load() });
+              break;
+            case 'options.save':
+              save(m.options);
+              break;
+          }
+        });
+      });
+      
+    </script>
+  </head>
+  <body>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "name": "__MSG_name__",
+  "version": "0.0.1",
+  "description": "__MSG_description__",
+  "default_locale": "en",
+  "background_page": "background.html",
+  "options_page": "options.html",
+  "content_scripts": [
+    {
+      "matches": [
+        "http://twitter.com/*",
+        "https://twitter.com/*"
+      ],
+      "js": [ "content.js" ],
+      "run_at": "document_end"
+    }
+  ]
+}

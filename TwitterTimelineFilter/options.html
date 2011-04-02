@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Options</title>
+    <script type="text/javascript" src="jquery-1.5.2.min.js"></script>
+    <script type="text/javascript">
+      $(function() {
+      var getMessage = chrome.i18n.getMessage;
+
+      var setMessage = function() {
+        var name = arguments[0];
+        $('.' + name).text(getMessage.apply(null, arguments));
+      };
+      setMessage('options_options');
+      setMessage('options_type');
+      setMessage('options_type_text');
+      setMessage('options_type_screen_name');
+      setMessage('options_type_full_name');
+      setMessage('options_pattern');
+      setMessage('options_regexp');
+
+      $('input[name="add"]').val(getMessage('options_add'));
+      $('input[name="save"]').val(getMessage('options_save'));
+      $('input[name="reset"]').val(getMessage('options_reset'));
+
+      setMessage('options_license');
+
+      var add = function(filter) {
+        var type = 
+          $('<select />').attr('name', 'type')
+            .append($('<option />').val('text').text(getMessage('options_type_text')))
+            .append($('<option />').val('screenName').text(getMessage('options_type_screen_name')))
+            .append($('<option />').val('fullName').text(getMessage('options_type_full_name')));
+        type.val(filter.type);
+        var pattern =
+          $('<input />').attr({ type: 'text', name: 'pattern' }).val(filter.pattern);
+        var regexp = 
+          $('<input />').attr({ type: 'checkbox', name: 'regexp' }).val('true').attr('checked', filter.regexp ? 'true' : '');
+        var button =
+          $('<input />').attr({ type: 'button', name: 'delete' }).val(getMessage('options_delete'));
+
+        $('#filters')
+          .append($('<tr />')
+            .append($('<td />').append(type))
+            .append($('<td />').append(pattern))
+            .append($('<td />').append(regexp))
+            .append($('<td />').append(button)));
+      };
+
+      var save = function() {
+        var filters = $.map($('#filters tr:not(:first)'), function(element) {
+          var type = $('select[name="type"]', element);
+          var pattern = $('input[name="pattern"]', element);
+          var regexp = $('input[name="regexp"]', element);
+          return { type: type.val(), pattern: pattern.val(), regexp: regexp.is(':checked') };
+        });
+        port.postMessage({ type: 'options.save', options: { filters: filters } });
+      };
+
+      var port = chrome.extension.connect({ name: 'TwitFilter' });
+      port.onMessage.addListener(function(m) {
+        switch(m.type) {
+          case 'options.load':
+            m.options.filters.forEach(function(filter) {
+              add(filter);
+            });
+            break;
+        }
+      });
+
+      var load = function() {
+        port.postMessage({ type: 'options.load' });
+      };
+
+      load();
+
+      $('#filters input[name="delete"]').live('click', function(e) {
+        $(this).parent().parent().remove();
+        return false;
+      });
+
+      $('form#register').submit(function(e) {
+        var type = $('#register select[name="type"]');
+        var pattern = $('#register input[name="pattern"]');
+        var regexp = $('#register input[name="regexp"]');
+
+        if(pattern.val().length == 0) {
+          return false;
+        }
+
+        add({ type: type.val(), pattern: pattern.val(), regexp: regexp.is(':checked') });
+
+        $('#register select[name="type"]').val('text');
+        $('#register input[name="pattern"]').val('');
+        $('#register input[name="regexp"]').attr('checked', '');
+        return false;
+      });
+
+      $('input[name="save"]').click(function(e) {
+        save();
+        return false;
+      });
+
+      $('input[name="reset"]').click(function(e) {
+        $('#filters tr:not(:first)').remove();
+        load();
+        return false;
+      });
+
+      });
+    </script>
+  </head>
+  <body>
+    <h1 class="options_options"></h1>
+    <table id="filters">
+      <tr><td class="options_type"></td><td class="options_pattern"></td><td class="options_regexp"></td><td></td></tr>
+    </table>
+    <form id="register">
+      <table>
+        <tr><td class="options_type"></td><td class="options_pattern"></td><td class="options_regexp"></td><td></td></tr>
+        <tr>
+          <td>
+            <select name="type" value="text">
+              <option value="text" class="options_type_text"></option>
+              <option value="screenName" class="options_type_screen_name"></option>
+              <option value="fullName" class="options_type_full_name"></option>
+            </select>
+          </td>
+          <td>
+            <input type="text" name="pattern" />
+          </td>
+          <td>
+            <input type="checkbox" name="regexp" value="true" />
+          </td>
+          <td>
+            <input type="submit" name="add" value="" />
+          </td>
+      </table>
+    </form>
+    <input type="button" name="save" value="" />
+    <input type="button" name="reset" value="" />
+  </body>
+</html>
+
