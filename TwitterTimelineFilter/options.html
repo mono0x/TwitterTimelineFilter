@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>Options</title>
+    <link rel="stylesheet" type="text/css" href="options.css" />
     <script type="text/javascript" src="jquery-1.5.2.min.js"></script>
     <script type="text/javascript">
       $(function() {
@@ -41,7 +42,7 @@
           $('<input />').attr({ type: 'button', name: 'delete' }).val(getMessage('options_delete'));
 
         $('#filters')
-          .append($('<tr />')
+          .append($('<tr />').addClass('filter')
             .append($('<td />').append(type))
             .append($('<td />').append(pattern))
             .append($('<td />').append(regexp))
@@ -114,12 +115,12 @@
   <body>
     <h1 class="options_options"></h1>
     <table id="filters">
-      <tr><td class="options_type"></td><td class="options_pattern"></td><td class="options_regexp"></td><td></td></tr>
+      <tr class="filter"><td class="options_type"></td><td class="options_pattern"></td><td class="options_regexp"></td><td></td></tr>
     </table>
     <form id="register">
       <table>
-        <tr><td class="options_type"></td><td class="options_pattern"></td><td class="options_regexp"></td><td></td></tr>
-        <tr>
+        <tr class="filter"><td class="options_type"></td><td class="options_pattern"></td><td class="options_regexp"></td><td></td></tr>
+        <tr class="filter">
           <td>
             <select name="type" value="text">
               <option value="text" class="options_type_text"></option>
