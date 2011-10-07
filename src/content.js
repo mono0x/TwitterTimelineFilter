@@ -16,11 +16,19 @@ port.onMessage.addListener(function(m) {
 });
 port.postMessage({ type: 'options.load' });
 
+window.onload = function() {
+  Array.prototype.forEach.call(document.querySelectorAll('.stream-item'), process);
+};
+
 document.addEventListener('DOMNodeInserted', function(e) {
   var element = e.target;
-  if(!element.className || element.className.indexOf('stream-item') == -1) {
+  if((element.className || '').split(' ').indexOf('stream-item') == -1) {
     return;
   }
+  process(element);
+}, false);
+
+var process = function(element) {
   var tweetContent = element.querySelector('.stream-item-content .tweet-content');
   var tweet = tweetContent.parentNode.parentNode;
 
@@ -31,7 +39,7 @@ document.addEventListener('DOMNodeInserted', function(e) {
   if(match(text, screenName, fullName)) {
     element.style.display = 'none';
   }
-}, false);
+};
 
 var match = function(text, screenName, fullName) {
   return filters.some(function(filter) {
